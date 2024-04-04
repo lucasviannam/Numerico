@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import math
 import numpy as np
 
-def ResolveSistema(M):
+def EliminacaoGauss(M):
     n = len(M)
     Solucao = np.zeros(n)
     for i in range(n-1):
@@ -21,12 +21,23 @@ def ResolveSistema(M):
     return Solucao
 
 
+#def Spline(n,a0,):
+
+
 
 def main():
     M = np.array([[1.0,1.0,1.0,3.0],[2.0,4.0,8.0,14.0],[5.0,-5.0,9.0,9.0]])
     #print(len(M))
     #print(M[1][0])
-    Solucao = ResolveSistema(M)
-    print(Solucao)
+    #Solucao = EliminacaoGauss(M)
+    y = np.zeros(40)
+    x = np.linspace(1,20,40)
+    print(x)
+    for i in range(40):
+        y[i] = 2*x[i]**3-5*x[i]**2+3*x[i]+15
+    plt.plot(x,y,'o')
+    plt.show()
+
+    #print(Solucao)
 
 main()
