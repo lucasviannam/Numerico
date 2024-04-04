@@ -2,22 +2,22 @@ import matplotlib.pyplot as plt
 import math
 import numpy as np
 
-def EliminacaoGauss(M):
-    n = len(M)
+def EliminacaoDeGauss(A,B):
+    n =  len(A)
+    mult = np.zeros(n-1)
     Solucao = np.zeros(n)
     for i in range(n-1):
         for j in range(i+1,n):
-            M[j][i] = M[j][i]/M[i][i]
-            for k in range(i+1,n+1):
-                M[j][k] = M[j][k] - M[j][i]*M[i][k]
+            mult[j-1] = A[j][i]/A[i][i]
+            A[j][i+1:] = A[j][i+1:] - A[i][i+1:]*mult[j-1]
+            B[j] = B[j] - B[i]*mult[j-1]
+            A[j][i] = 0.0
     for i in range(n-1,-1,-1):
-        for j in range(i+1,n):
-            M[i][n]=M[i][n]-M[i][j]
-        M[i][i] = M[i][n]/M[i][i]
-        for j in range(i-1,-1,-1):
-            M[j][i] = M[j][i]*M[i][i]
+        B[i] = B[i]-np.sum(A[i][i+1:])
+        A[i][i] = B[i]/A[i][i]
+        A[:i,i] = A[:i,i]*A[i][i]
     for i in range(n):
-        Solucao[i] = M[i][i]
+        Solucao[i] = A[i][i]
     return Solucao
 
 
@@ -37,7 +37,8 @@ def natural_cubic_spline(x, y):
     for i in range(1,n-1):
         B[i] = (y[i+1]-2*y[i]+y[i-1])*3/h
     c = np.zeros(n)
-    c = np.linalg.solve(A,B)
+    #c = np.linalg.solve(A,B)
+    c = EliminacaoDeGauss(A,B)
     b = np.zeros(n)
     d = np.zeros(n)
     for i in range(n-1):
@@ -77,18 +78,10 @@ def main():
     print(b)
     print(c)
     print(d)
-    plt.plot(x,y,'o')
-    for i in range(len(yteste)):
+    plt.plot(x[:Npontos-1],y[:Npontos-1],'o')
+    for i in range(len(yteste)-1):
         plt.plot(xteste[i],yteste[i])
-    #plt.ylim(0,8000)
     plt.show()
-    #coefficients = natural_cubic_spline(x, y)
-    #for i, coef in enumerate(coefficients):
-    #    print(f"S{i}(x) = {coef[0]} + {coef[1]}(x - {x[i]}) + {coef[2]}(x - {x[i]})^2 + {coef[3]}(x - {x[i]})^3")
-    #plt.plot(x,y,'o')
-    #plt.show()
-
-    #print(Solucao)
 
 main()
 
