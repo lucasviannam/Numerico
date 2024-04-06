@@ -40,7 +40,7 @@ def main():
     Vlinha = np.linalg.inv(V)
     A = np.matmul(V,Lambda)
     A = np.matmul(A,Vlinha)
-    Y = np.zeros([3,n])
+    Y = np.zeros([3,n],dtype=float)
     Y[0][0] = 3
     Y[1][0] = 4
     Y[2][0] = 6
