@@ -24,10 +24,10 @@ def f(t,y,m): #funcao de discretizacao
     return f
 
 def RK(t,yk,h,m):
-    k1 = f(t,yk,m)*h
-    k2 = f(t+h/2,yk+k1*h/2,m)*h
-    k3 = f(t+h/2,yk+k2*h/2,m)*h
-    k4 = f(t+h,yk+k3*h,m)*h
+    k1 = f(t,yk,m)
+    k2 = f(t+h/2,yk+k1*h/2,m)
+    k3 = f(t+h/2,yk+k2*h/2,m)
+    k4 = f(t+h,yk+k3*h,m)
     ykplus1 = yk + h*(k1+2*k2+2*k3+k4)/6
     return ykplus1
 
