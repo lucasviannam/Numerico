@@ -64,6 +64,8 @@ def main():
     #print(x)
     #print(y)
     a,b,c,d = natural_cubic_spline(x,y)
+    yexato = np.zeros(45)
+    xexato = np.linspace(0,7,45)
     yteste = np.zeros((Npontos-1,20))
     offset = np.linspace(0,1,20)
     xteste = np.zeros((Npontos-1,20))
@@ -73,14 +75,25 @@ def main():
     for i in range(Npontos-1):
         for j in range(20):
             yteste[i][j] = a[i] + b[i]*(xteste[i][j]-xteste[i][0]) + c[i]*(xteste[i][j]-xteste[i][0])**2 + d[i]*(xteste[i][j]-xteste[i][0])**3
+    for i in range(len(yexato)):
+        yexato[i] = 2*xexato[i]**3-5*xexato[i]**2+3*xexato[i]+15 
+
 
     print(a)
     print(b)
     print(c)
     print(d)
-    plt.plot(x[:Npontos-1],y[:Npontos-1],'o')
+    plt.plot(x[:Npontos-1],y[:Npontos-1],'o',label="Pontos amostrados")
+    linha = [':','--']
     for i in range(len(yteste)-1):
-        plt.plot(xteste[i],yteste[i])
+        plt.plot(xteste[i],yteste[i],linha[i%2])
+    plt.legend()
+    plt.savefig("./figures/SplineTeste.png")
+    plt.plot(xexato,yexato,'k+',label="Pontos não amostrados")
+    plt.xlim(1,7)
+    plt.ylim(0,500)
+    plt.legend()
+    plt.savefig("./figures/SplineTesteDetalhe.png")
     plt.show()
 
 main()

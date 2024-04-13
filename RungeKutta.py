@@ -85,7 +85,9 @@ def main():
 
         #Plot
         string = "n = " + str(n)
-        plt.plot(tk[:n-1],Y[0][:n-1],label=string)
+        linha = ['--','-.',':','.',',','-']
+        if (j+1)%2==0: 
+            plt.plot(tk[:n-1],Y[0][:n-1],linha[np.int16(j/2)],label=string,)
     
     for i in range(nmax):
         #Yexato[:,i] = C[0]*np.exp(lambda1*tk[i])*V[:,0] + C[1]*np.exp(lambda2*tk[i])*V[:,1] + C[2]*np.exp(lambda3*tk[i])*V[:,2]
@@ -93,10 +95,10 @@ def main():
     #print(Y)
     plt.plot(tk,Yexato[0],label="Teorico")
     #plt.plot(tk,Y[0],label="simulacao")
-    plt.title("Variável Y[0] simulada com diferentes tamanhos de passo")
+    #plt.title("Variável Y[0] simulada com diferentes tamanhos de passo")
     plt.legend()
     plt.savefig("./figures/RungeKuttaLonge.png")
-    plt.title("Variável Y[0] simulada com diferentes tamanhos de passo \n melhor visualização")
+    #plt.title("Variável Y[0] simulada com diferentes tamanhos de passo \n melhor visualização")
     plt.xlim(0.792,0.807)
     plt.ylim(-1400,-1200)
     plt.savefig("./figures/RungeKuttaPerto.png")
